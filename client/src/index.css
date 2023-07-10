@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gameboard {
+  display: inline-grid;
+  grid-template-columns: repeat(8, 50px);
+  border: black 1px solid;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.square.bg-black {
+  background: rgb(129, 0, 0);
+}
+
+.square.bg-white {
+  background: rgb(255, 220, 133);
+}
+
+.piece {
+  font-size: 20px;
+}
+
+.piece.b.Pawn {
+  font-size: 12px;
+}
