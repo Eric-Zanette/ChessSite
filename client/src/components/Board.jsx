@@ -4,6 +4,10 @@ import Piece from "./Piece";
 
 const Board = () => {
   const [board, setBoard] = useState([]);
+  const [moves, setMoves] = useState([]);
+  const [player, setPlayer] = useState("white");
+
+  var socketio = io("http://localhost:5000");
 
   /* Initialize empty board */
   const baseboard = [];
@@ -32,25 +36,30 @@ const Board = () => {
       for (let j = 0; j < 8; j++) {
         baseboard[i][j]["name"] = data[i][j]["name"];
         baseboard[i][j]["shortname"] = data[i][j]["shortname"];
-        baseboard[i][j]["position"] = data[i][j]["position"];
+        baseboard[i][j]["position"] = [i, j];
         baseboard[i][j]["symbol"] = data[i][j]["symbol"];
         baseboard[i][j]["player"] = data[i][j]["player"];
+        baseboard[i][j]["valid_moves"] = data[i][j]["valid_moves"];
       }
     }
-    console.log(baseboard);
     setBoard(baseboard);
-    console.log(board);
   };
 
-  const onClick = (position) => {
-    /* socketio.emit("message", position) */
-    console.log(position);
+  /* sends moves to server */
+  const onClick = async (position) => {
+    if (moves.length == 1) {
+      const sendMoves = [...moves, position];
+      socketio.emit("message", sendMoves[0], sendMoves[1]);
+      setMoves([]);
+    } else {
+      setMoves([position]);
+    }
   };
 
-  /*   var socketio = io("http://localhost:5000");
+  /* Receives updated board state */
   socketio.on("message", (data) => {
-    console.log(data);
-  }); */
+    addToBoard(data);
+  });
 
   if (!board) {
     return <div>LOADING</div>;
@@ -62,7 +71,7 @@ const Board = () => {
         line.map((square) => (
           <div
             className={`square bg-${square.color}`}
-            onClick={() => onClick(square)}
+            onClick={() => onClick(square.position)}
           >
             <Piece
               name={square.symbol}

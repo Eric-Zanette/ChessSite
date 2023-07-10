@@ -1,7 +1,6 @@
 const Piece = (props) => {
-  console.log(props);
   return (
-    <div class={`piece ${props.player} ${props.piece}`}>
+    <div className={`piece ${props.player} ${props.piece}`}>
       {props.name !== 0 && props.name}
     </div>
   );

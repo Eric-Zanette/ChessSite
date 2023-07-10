@@ -22,9 +22,14 @@ def home():
 
 
 @socketio.on("message")
-def message(move):
-    response = board.valid_moves(move)
-    send(response)
+def message(move1, move2):
+    global state
+    print(move1)
+    print(move2)
+    board.make_a_move(move1, move2)
+    print(board.render("player"))
+    state = board.slice_all()
+    send(state)
 
 
 if __name__ == "__main__":
