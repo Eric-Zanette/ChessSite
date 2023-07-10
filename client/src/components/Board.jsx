@@ -6,6 +6,7 @@ const Board = () => {
   const [board, setBoard] = useState([]);
   const [moves, setMoves] = useState([]);
   const [player, setPlayer] = useState("white");
+  const [valid_moves] = useState([]);
 
   var socketio = io("http://localhost:5000");
 
@@ -26,7 +27,8 @@ const Board = () => {
     fetch("http://localhost:5000/board")
       .then((res) => res.json())
       .then((data) => {
-        addToBoard(data);
+        addToBoard(data.board);
+        setPlayer(data.player);
       });
   }, []);
 
@@ -49,6 +51,7 @@ const Board = () => {
   const onClick = async (position) => {
     if (moves.length == 1) {
       const sendMoves = [...moves, position];
+      console.log(position);
       socketio.emit("message", sendMoves[0], sendMoves[1]);
       setMoves([]);
     } else {
@@ -58,7 +61,9 @@ const Board = () => {
 
   /* Receives updated board state */
   socketio.on("message", (data) => {
-    addToBoard(data);
+    console.log(data);
+    addToBoard(data.board);
+    setPlayer(data.player);
   });
 
   if (!board) {
@@ -66,22 +71,25 @@ const Board = () => {
   }
 
   return (
-    <div className="gameboard">
-      {board.map((line) =>
-        line.map((square) => (
-          <div
-            className={`square bg-${square.color}`}
-            onClick={() => onClick(square.position)}
-          >
-            <Piece
-              name={square.symbol}
-              player={square.player}
-              piece={square.name}
-            />
-          </div>
-        ))
-      )}
-    </div>
+    <>
+      <h1 className="turnAnnounce">{player}'s Turn to Move!</h1>
+      <div className="gameboard">
+        {board.map((line) =>
+          line.map((square) => (
+            <div
+              className={`square bg-${square.color}`}
+              onClick={() => onClick(square.position)}
+            >
+              <Piece
+                name={square.symbol}
+                player={square.player}
+                piece={square.name}
+              />
+            </div>
+          ))
+        )}
+      </div>
+    </>
   );
 };
 

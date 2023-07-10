@@ -18,18 +18,17 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route("/board", methods=["POST", "GET"])
 def home():
-    return state
+    return {"board": state, "player": board.player}
 
 
 @socketio.on("message")
 def message(move1, move2):
+    print("LOLOLOLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     global state
-    print(move1)
-    print(move2)
     board.make_a_move(move1, move2)
-    print(board.render("player"))
+    print(board.player)
     state = board.slice_all()
-    send(state)
+    send({"board": state, "player": board.player})
 
 
 if __name__ == "__main__":
