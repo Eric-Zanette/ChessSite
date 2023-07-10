@@ -103,6 +103,7 @@ const Board = () => {
           ))
         )}
       </div>
+      <h1 className="turnAnnounce">{inCheck}!</h1>
     </>
   );
 };

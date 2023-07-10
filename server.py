@@ -26,7 +26,13 @@ def message(move1, move2):
     global state
     board.make_a_move(move1, move2)
     state = board.slice_all()
-    inCheck = board.test_check()
+
+    if board.test_check():
+        inCheck = "You're in Check!"
+        if board.test_checkmate():
+            inCheck = "You're in Checkmate!"
+    else:
+        inCheck = "Not in Check"
     send({"board": state, "player": board.player, "inCheck": inCheck})
 
 
