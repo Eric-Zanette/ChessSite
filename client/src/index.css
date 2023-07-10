@@ -54,7 +54,7 @@ body {
   border: black 1px solid;
 }
 
-.square {
+.gameboard .square {
   height: 75px;
   width: 75px;
   justify-content: center;
@@ -62,11 +62,15 @@ body {
   align-items: center;
 }
 
-.square.bg-black {
+.gameboard .square.valid {
+  border: green 3px solid;
+}
+
+.gameboard .square.bg-black {
   background: rgb(129, 0, 0);
 }
 
-.square.bg-white {
+.gameboard .square.bg-white {
   background: rgb(255, 220, 133);
 }
 

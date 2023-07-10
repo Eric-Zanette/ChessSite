@@ -23,12 +23,11 @@ def home():
 
 @socketio.on("message")
 def message(move1, move2):
-    print("LOLOLOLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     global state
     board.make_a_move(move1, move2)
-    print(board.player)
     state = board.slice_all()
-    send({"board": state, "player": board.player})
+    inCheck = board.test_check()
+    send({"board": state, "player": board.player, "inCheck": inCheck})
 
 
 if __name__ == "__main__":

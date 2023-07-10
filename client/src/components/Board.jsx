@@ -6,7 +6,8 @@ const Board = () => {
   const [board, setBoard] = useState([]);
   const [moves, setMoves] = useState([]);
   const [player, setPlayer] = useState("white");
-  const [valid_moves] = useState([]);
+  const [inCheck, setInCheck] = useState();
+  const [validMoves, setValidMoves] = useState([]);
 
   var socketio = io("http://localhost:5000");
 
@@ -29,6 +30,7 @@ const Board = () => {
       .then((data) => {
         addToBoard(data.board);
         setPlayer(data.player);
+        setInCheck(data.inCheck);
       });
   }, []);
 
@@ -48,14 +50,17 @@ const Board = () => {
   };
 
   /* sends moves to server */
-  const onClick = async (position) => {
+  const onClick = (position) => {
     if (moves.length == 1) {
       const sendMoves = [...moves, position];
-      console.log(position);
       socketio.emit("message", sendMoves[0], sendMoves[1]);
       setMoves([]);
+      setValidMoves([]);
     } else {
-      setMoves([position]);
+      if (board[position[0]][position[1]].name) {
+        setValidMoves(board[position[0]][position[1]].valid_moves);
+        setMoves([position]);
+      }
     }
   };
 
@@ -64,6 +69,7 @@ const Board = () => {
     console.log(data);
     addToBoard(data.board);
     setPlayer(data.player);
+    setInCheck(data.inCheck);
   });
 
   if (!board) {
@@ -77,7 +83,15 @@ const Board = () => {
         {board.map((line) =>
           line.map((square) => (
             <div
-              className={`square bg-${square.color}`}
+              className={`square bg-${square.color} ${
+                validMoves.some(
+                  (move) =>
+                    move[0] === square.position[0] &&
+                    move[1] === square.position[1]
+                )
+                  ? "valid"
+                  : "invalid"
+              }`}
               onClick={() => onClick(square.position)}
             >
               <Piece
