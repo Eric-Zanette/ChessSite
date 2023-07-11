@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 /* Set up */
@@ -23,6 +26,38 @@ body {
 
 .App {
   height: 100%;
+}
+
+/* Navbar */
+
+nav {
+  height: 75px;
+  background-color: rgb(129, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+nav .navContainer {
+  position: relative;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav .navContainer h1 {
+  font-size: 40px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+nav .navContainer .navLinks {
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* Game room */
