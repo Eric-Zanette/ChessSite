@@ -3,14 +3,6 @@ import io from "socket.io-client";
 import Piece from "./Piece";
 
 const Board = () => {
-  const [board, setBoard] = useState([]);
-  const [moves, setMoves] = useState([]);
-  const [player, setPlayer] = useState("white");
-  const [inCheck, setInCheck] = useState();
-  const [validMoves, setValidMoves] = useState([]);
-
-  var socketio = io("http://localhost:5000");
-
   /* Initialize empty board */
   const baseboard = [];
   for (let i = 0; i < 8; i++) {
@@ -22,6 +14,14 @@ const Board = () => {
     }
     baseboard.push(baseline);
   }
+
+  const [board, setBoard] = useState(baseboard);
+  const [moves, setMoves] = useState([]);
+  const [player, setPlayer] = useState();
+  const [inCheck, setInCheck] = useState();
+  const [validMoves, setValidMoves] = useState([]);
+
+  var socketio = io("http://localhost:5000");
 
   /* get pieces state */
   useEffect(() => {

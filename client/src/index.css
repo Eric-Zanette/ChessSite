@@ -41,7 +41,7 @@ nav {
 
 nav .navContainer {
   position: relative;
-  width: 1000px;
+  width: 1200px;
   display: flex;
   justify-content: space-between;
 }
@@ -110,9 +110,5 @@ nav .navContainer .navLinks {
 }
 
 .piece {
-  font-size: 30px;
-}
-
-.piece.Black.Pawn {
-  font-size: 18px;
+  font-size: 40px;
 }
