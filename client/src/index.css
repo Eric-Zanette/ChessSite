@@ -20,6 +20,11 @@ body {
   height: 100vh;
   background-color: rgb(32, 0, 0);
 }
+
+h2 {
+  color: white;
+}
+
 #root {
   height: 100%;
 }
@@ -50,6 +55,7 @@ nav .navContainer h1 {
   font-size: 40px;
   font-weight: 700;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 nav .navContainer .navLinks {
@@ -58,6 +64,7 @@ nav .navContainer .navLinks {
   font-size: 20px;
   align-items: center;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 /* Game room */
@@ -73,6 +80,43 @@ nav .navContainer .navLinks {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* form */
+
+.gameRoom form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.gameRoom form .formLine {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.gameRoom form .line {
+  display: flex;
+  flex-direction: column;
+  background: rgb(129, 0, 0);
+}
+
+.gameRoom form .line h2 {
+  margin: 5px;
+}
+
+.gameRoom form .line input {
+  padding: 5px;
+}
+
+.gameRoom form button {
+  color: white;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 132, 0, 0.673);
+  padding: 0 10px;
+  border-radius: 0 10px 10px 0;
 }
 
 /* Board */
