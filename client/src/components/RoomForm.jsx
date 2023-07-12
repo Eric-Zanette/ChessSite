@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-const RoomForm = () => {
+const RoomForm = ({ setRoom }) => {
   const [input, setInput] = useState({
     join: "",
     create: "",
@@ -18,6 +18,7 @@ const RoomForm = () => {
     e.preventDefault();
     const boardName = input[e.target.name];
     fetch("http://localhost:5000/match", {
+      credentials: "include",
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -26,7 +27,11 @@ const RoomForm = () => {
       body: JSON.stringify({ [e.target.name]: boardName }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data.room);
+        setRoom(data.room);
+        localStorage.setItem("room", data.room);
+      });
   };
 
   return (

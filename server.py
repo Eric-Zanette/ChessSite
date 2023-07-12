@@ -9,18 +9,8 @@ boards = {}
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "fsdfsdfsdf"
-CORS(app)
+CORS(app, supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins="*")
-
-""" Initializes board  """
-
-
-@app.route("/board", methods=["POST", "GET"])
-def home():
-    room = session.get("room")
-    if room is None or room not in boards:
-        return False
-    return {"board": boards[room].slice_all(), "player": boards[room].player}
 
 
 """ Creates or joins gameroom """
@@ -37,16 +27,25 @@ def match():
         board = chess.Gameboard()
         board.reset()
         boards[create] = board
-        session["room"] = create
+        room = create
     elif join is not None:
         if join not in boards.keys():
             return {"error": "Games does not exist"}
-        session["room"] = join
+        room = join
     else:
         return {"error": "must enter game room name"}
+    return {"room": room, "board": boards[room].slice_all()}
 
-    print(boards)
-    return {session["room"]: boards[session["room"]].slice_all()}
+
+""" Initializes board  """
+
+
+@app.route("/board", methods=["POST", "GET"])
+def home():
+    room = request.get_json().get("room")
+    if room is None or room not in boards:
+        return {"board": False, "room": room}
+    return {"board": boards[room].slice_all(), "player": boards[room].player}
 
 
 """ Joins gameroom """
@@ -57,7 +56,6 @@ def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in boards.keys():
         return False
-
     return True
 
 
@@ -65,8 +63,8 @@ def room():
 
 
 @socketio.on("message")
-def message(move1, move2):
-    room = session["room"]
+def message(move1, move2, room):
+    join_room(room)
     board = boards[room]
     board.make_a_move(move1, move2)
     state = board.slice_all()
@@ -79,7 +77,7 @@ def message(move1, move2):
         inCheck = "Not in Check"
     send(
         {
-            "gameroom": session["room"],
+            "gameroom": room,
             "board": state,
             "player": board.player,
             "inCheck": inCheck,

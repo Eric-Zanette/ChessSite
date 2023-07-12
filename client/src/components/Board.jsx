@@ -4,6 +4,7 @@ import Piece from "./Piece";
 
 const Board = () => {
   /* Initialize empty board */
+
   const baseboard = [];
   for (let i = 0; i < 8; i++) {
     const baseline = [];
@@ -25,12 +26,22 @@ const Board = () => {
 
   /* get pieces state */
   useEffect(() => {
-    fetch("http://localhost:5000/board")
+    fetch("http://localhost:5000/board", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ room: localStorage.getItem("room") }),
+    })
       .then((res) => res.json())
       .then((data) => {
-        addToBoard(data.board);
-        setPlayer(data.player);
-        setInCheck(data.inCheck);
+        if (data.board != false) {
+          addToBoard(data.board);
+          setPlayer(data.player);
+          setInCheck(data.inCheck);
+        }
       });
   }, []);
 
@@ -53,7 +64,8 @@ const Board = () => {
   const onClick = (position) => {
     if (moves.length == 1) {
       const sendMoves = [...moves, position];
-      socketio.emit("message", sendMoves[0], sendMoves[1]);
+      const room = localStorage.getItem("room");
+      socketio.emit("message", sendMoves[0], sendMoves[1], room);
       setMoves([]);
       setValidMoves([]);
     } else {
