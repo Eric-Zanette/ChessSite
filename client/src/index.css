@@ -84,10 +84,14 @@ nav .navContainer .navLinks {
 
 /* form */
 
-.gameRoom form {
+.gameRoom .formsContainer {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 20px;
+}
+
+.gameRoom form {
+  display: flex;
 }
 
 .gameRoom form .formLine {
