@@ -5,6 +5,8 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO, send, join_room, leave_room
 import Chess.ChessObjects as chess
 from flask_cors import CORS
+from flask_login import LoginManager
+
 
 boards = {}
 
@@ -14,6 +16,9 @@ CORS(app, supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins="*")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+""" login = LoginManager(app) """
+
+""" from app import models, routes """
 
 
 """ Creates or joins gameroom """
