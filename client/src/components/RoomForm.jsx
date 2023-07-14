@@ -5,6 +5,7 @@ const RoomForm = ({ setRoom }) => {
   const [input, setInput] = useState({
     join: "",
     create: "",
+    name: "",
   });
 
   const onChange = (e) => {
@@ -24,18 +25,30 @@ const RoomForm = ({ setRoom }) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ [e.target.name]: boardName }),
+      body: JSON.stringify({ [e.target.name]: boardName, name: input.name }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data.room);
         setRoom(data.room);
         localStorage.setItem("room", data.room);
+        localStorage.setItem("name", data.name);
       });
   };
 
   return (
     <div className="formsContainer">
+      <div className="nameContainer">
+        <h1 className="nameHeader">Name: </h1>
+        <input
+          type="text"
+          placeholder="Your name"
+          name="name"
+          value={input.name}
+          onChange={(e) => onChange(e)}
+        />
+      </div>
+
       <h1>Play a Game!</h1>
       <form name="join" onSubmit={(e) => onSubmit(e)}>
         <div className="line">

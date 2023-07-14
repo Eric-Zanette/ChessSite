@@ -65,7 +65,8 @@ const Board = () => {
     if (moves.length == 1) {
       const sendMoves = [...moves, position];
       const room = localStorage.getItem("room");
-      socketio.emit("message", sendMoves[0], sendMoves[1], room);
+      const name = localStorage.getItem("name");
+      socketio.emit("message", sendMoves[0], sendMoves[1], room, name);
       setMoves([]);
       setValidMoves([]);
     } else {

@@ -90,6 +90,27 @@ nav .navContainer .navLinks {
   gap: 20px;
 }
 
+.gameRoom .formsContainer .nameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.gameRoom .formsContainer .nameContainer .nameHeader {
+  height: 100%;
+  margin: 0;
+  padding-right: 10px;
+  color: rgb(255, 255, 255);
+}
+
+.gameRoom .formsContainer .nameContainer input {
+  height: 75%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .gameRoom form {
   display: flex;
 }
