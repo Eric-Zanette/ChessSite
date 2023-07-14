@@ -16,9 +16,9 @@ CORS(app, supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins="*")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-""" login = LoginManager(app) """
+login = LoginManager(app)
 
-""" from app import models, routes """
+from app import models, routes
 
 
 """ Creates or joins gameroom """
@@ -80,6 +80,10 @@ def message(move1, move2, room, name):
     join_room(room)
     board = boards[room]["board"]
     turnColor = board.player
+    print(name)
+    print(boards[room])
+    print(board.player)
+    print(boards[room][turnColor])
     if boards[room][turnColor] == name:
         board.make_a_move(move1, move2)
         state = board.slice_all()
