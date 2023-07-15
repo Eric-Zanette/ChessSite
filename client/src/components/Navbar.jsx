@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import UsersContext from "../context/Users";
+import { useEffect, useContext } from "react";
 
 const Navbar = () => {
+  const { user, logout } = useContext(UsersContext);
+
   return (
     <nav>
       <div className="navContainer">
@@ -18,7 +22,13 @@ const Navbar = () => {
             <Link to={"/game"}>Play a Game</Link>
           </li>
           <li>
-            <Link to={"/login"}>Login</Link>
+            {user ? (
+              <Link to={"/"} onClick={logout}>
+                Logout
+              </Link>
+            ) : (
+              <Link to={"/login"}>Login</Link>
+            )}
           </li>
         </ul>
       </div>

@@ -63,9 +63,15 @@ export const UsersProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        data.username &&
-          setUser({ username: data.username, email: data.email });
+        data.username
+          ? setUser({ username: data.username, email: data.email })
+          : setUser(null);
       });
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
@@ -74,6 +80,7 @@ export const UsersProvider = ({ children }) => {
         user,
         login,
         register,
+        logout,
       }}
     >
       {children}

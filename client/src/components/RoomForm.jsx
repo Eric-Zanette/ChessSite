@@ -40,7 +40,7 @@ const RoomForm = ({ setRoom }) => {
   };
 
   if (!user) {
-    return <p>LOADING</p>;
+    return <p>Sign in to Play a Game</p>;
   }
 
   return (
