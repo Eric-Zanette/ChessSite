@@ -12,15 +12,22 @@ jwt_key = "zzzzxxxxxcccccvvvvvaassddff"
 
 @app.route("/register", methods=["POST"])
 def register():
+    print(request.get_json())
     req = request.get_json()
+
     errors = registration_validation(req)
 
     if len(errors.keys()) == 0:
-        hashed_pass = generate_password_hash(req["password"])
-        user = User(username=req["username"], email=req["email"], password=hashed_pass)
-        db.session.add(user)
-        db.session.commit()
-        return "success!"
+        try:
+            hashed_pass = generate_password_hash(req["password"])
+            user = User(
+                username=req["username"], email=req["email"], password=hashed_pass
+            )
+            db.session.add(user)
+            db.session.commit()
+            return {"msg": "Success!"}
+        except:
+            return {"msg": "error!"}
     else:
         return errors
 

@@ -19,10 +19,12 @@ html {
 body {
   height: 100vh;
   background-color: rgb(32, 0, 0);
+  color: white;
 }
 
-h2 {
-  color: white;
+input {
+  color: black;
+  padding: 2px;
 }
 
 #root {
@@ -65,6 +67,15 @@ nav .navContainer .navLinks {
   align-items: center;
   cursor: pointer;
   margin-right: 10px;
+}
+
+.container {
+  display: flex;
+  width: 1200px;
+  margin: 40px auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Game room */
@@ -180,4 +191,34 @@ nav .navContainer .navLinks {
 
 .piece {
   font-size: 40px;
+  color: black;
+}
+
+/* Registration */
+
+.registerContainer {
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.registerContainer h1 {
+  font-size: 30px;
+}
+
+.registerContainer .registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.registerContainer .registerForm input {
+  width: 100%;
+}
+
+.registerContainer .registerForm .buttons {
+  display: flex;
+  justify-content: space-between;
+  color: gold;
 }
