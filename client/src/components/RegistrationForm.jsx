@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import UsersContext from "../context/Users";
 
 const RegistrationForm = () => {
   const [input, setInput] = useState({
@@ -8,6 +9,16 @@ const RegistrationForm = () => {
     password: "",
     password2: "",
   });
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const navigate = useNavigate();
+
+  const { register } = useContext(UsersContext);
 
   const onChange = (e) => {
     setInput({
@@ -16,20 +27,10 @@ const RegistrationForm = () => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({ ...input }));
-    fetch("http://localhost:5000/register", {
-      credentials: "include",
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...input }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    const success = await register(input);
+    success === true ? navigate("/login") : setErrors({ ...success });
   };
 
   return (
@@ -43,8 +44,15 @@ const RegistrationForm = () => {
               type="text"
               value={input.username}
               name="username"
+              className={errors.username && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.username ? "block" : "none" }}
+            >
+              {errors.username}
+            </p>
           </div>
           <div className="inputcotainer">
             <p>Email</p>
@@ -52,8 +60,15 @@ const RegistrationForm = () => {
               type="text"
               value={input.email}
               name="email"
+              className={errors.email && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.email ? "block" : "none" }}
+            >
+              {errors.email}
+            </p>
           </div>
           <div className="inputcotainer">
             <p>Password</p>
@@ -61,8 +76,15 @@ const RegistrationForm = () => {
               type="password"
               value={input.password}
               name="password"
+              className={errors.password && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.password ? "block" : "none" }}
+            >
+              {errors.password}
+            </p>
           </div>
           <div className="inputcotainer">
             <p>Repeat Password</p>
@@ -70,8 +92,15 @@ const RegistrationForm = () => {
               type="password"
               value={input.password2}
               name="password2"
+              className={errors.password2 && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.password2 ? "block" : "none" }}
+            >
+              {errors.password2}
+            </p>
           </div>
           <div className="buttons">
             <button>Register</button>

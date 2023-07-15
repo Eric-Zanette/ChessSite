@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UsersContext from "../context/Users";
 
 const RoomForm = ({ setRoom }) => {
   const [input, setInput] = useState({
@@ -15,6 +16,8 @@ const RoomForm = ({ setRoom }) => {
     });
   };
 
+  const { user } = useContext(UsersContext);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const boardName = input[e.target.name];
@@ -25,7 +28,7 @@ const RoomForm = ({ setRoom }) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ [e.target.name]: boardName, name: input.name }),
+      body: JSON.stringify({ [e.target.name]: boardName, name: user.username }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -36,17 +39,14 @@ const RoomForm = ({ setRoom }) => {
       });
   };
 
+  if (!user) {
+    return <p>LOADING</p>;
+  }
+
   return (
     <div className="formsContainer">
       <div className="nameContainer">
-        <h1 className="nameHeader">Name: </h1>
-        <input
-          type="text"
-          placeholder="Your name"
-          name="name"
-          value={input.name}
-          onChange={(e) => onChange(e)}
-        />
+        <h1 className="nameHeader">Name: {user.username}</h1>
       </div>
 
       <h1>Play a Game!</h1>

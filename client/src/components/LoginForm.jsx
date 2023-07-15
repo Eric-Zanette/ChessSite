@@ -1,13 +1,20 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import UsersContext from "../context/Users";
 
 const LoginForm = () => {
   const [input, setInput] = useState({
-    username: "",
     email: "",
     password: "",
-    password2: "",
   });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const { login } = useContext(UsersContext);
 
   const onChange = (e) => {
     setInput({
@@ -16,20 +23,11 @@ const LoginForm = () => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({ ...input }));
-    fetch("http://localhost:5000/login", {
-      credentials: "include",
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...input }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    const success = await login(input);
+    console.log(success);
+    success === true ? navigate("/") : setErrors({ ...success });
   };
 
   return (
@@ -43,8 +41,15 @@ const LoginForm = () => {
               type="text"
               value={input.email}
               name="email"
+              className={errors.email && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.email ? "block" : "none" }}
+            >
+              {errors.email}
+            </p>
           </div>
           <div className="inputcotainer">
             <p>Password</p>
@@ -52,8 +57,15 @@ const LoginForm = () => {
               type="password"
               value={input.password}
               name="password"
+              className={errors.password && "invalid"}
               onChange={(e) => onChange(e)}
             />
+            <p
+              className="invalidText"
+              style={{ display: errors.password ? "block" : "none" }}
+            >
+              {errors.password}
+            </p>
           </div>
           <div className="buttons">
             <button>Login</button>
