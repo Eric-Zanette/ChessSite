@@ -5,7 +5,6 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO, send, join_room, leave_room
 import Chess.ChessObjects as chess
 from flask_cors import CORS
-from flask_login import LoginManager
 
 
 boards = {}
@@ -16,9 +15,8 @@ CORS(app, supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins="*")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-login = LoginManager(app)
 
-from app import models, routes
+from app import routes
 
 
 """ Creates or joins gameroom """
@@ -87,6 +85,11 @@ def room():
 
 @socketio.on("message")
 def message(move1, move2, room, name):
+    if room not in boards.keys():
+        return ""
+
+    from app.models import Game, User
+
     join_room(room)
     board = boards[room]["board"]
     boardroom = boards[room]
@@ -96,10 +99,28 @@ def message(move1, move2, room, name):
     elif boards[room][board.player] == name:
         board.make_a_move(move1, move2)
         state = board.slice_all()
+
+        """ Test for Check """
         if board.test_check():
             inCheck = "You're in Check!"
+
+            """ If checkmate log game and exit """
             if board.test_checkmate():
                 inCheck = "Checkmate!"
+                game = Game(
+                    room=room,
+                    winner=User.query.filter_by(username=boardroom[board.player2])
+                    .first()
+                    .id,
+                    user_id_white=User.query.filter_by(username=boardroom["White"])
+                    .first()
+                    .id,
+                    user_id_black=User.query.filter_by(username=boardroom["Black"])
+                    .first()
+                    .id,
+                )
+                db.session.add(game)
+                db.session.commit()
         else:
             inCheck = ""
         send(
@@ -111,6 +132,9 @@ def message(move1, move2, room, name):
             },
             to=room,
         )
+        """ Delete room after checkmate """
+        if inCheck == "Checkmate!":
+            del boards[room]
 
 
 if __name__ == "__main__":
