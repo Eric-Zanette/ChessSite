@@ -37,10 +37,15 @@ def match():
         board.reset()
         boards[create] = {"board": board, "White": name}
         room = create
+        player = name
+        print(player)
     elif join is not None:
         if join not in boards.keys():
             return {"error": "Games does not exist"}
-        boards[join]["Black"] = name
+        boardRoom = boards[join]
+        board = boardRoom["board"]
+        if boardRoom["White"] != name:
+            boardRoom["Black"] = name
         room = join
     else:
         return {"error": "must enter game room name"}
@@ -53,11 +58,14 @@ def match():
 @app.route("/board", methods=["POST", "GET"])
 def home():
     room = request.get_json().get("room")
+    boardRoom = boards[room]
+    board = boards[room]["board"]
+    playerColor = board.player
     if room is None or room not in boards:
         return {"board": False, "room": room}
     return {
-        "board": boards[room]["board"].slice_all(),
-        "player": boards[room]["board"].player,
+        "board": board.slice_all(),
+        "player": boardRoom[board.player],
     }
 
 
@@ -79,25 +87,24 @@ def room():
 def message(move1, move2, room, name):
     join_room(room)
     board = boards[room]["board"]
-    turnColor = board.player
-    print(name)
-    print(boards[room])
-    print(board.player)
-    print(boards[room][turnColor])
-    if boards[room][turnColor] == name:
+    boardroom = boards[room]
+
+    if "Black" not in boardroom.keys():
+        print(boardroom)
+    elif boards[room][board.player] == name:
         board.make_a_move(move1, move2)
         state = board.slice_all()
         if board.test_check():
             inCheck = "You're in Check!"
             if board.test_checkmate():
-                inCheck = "You're in Checkmate!"
+                inCheck = "Checkmate!"
         else:
-            inCheck = "Not in Check"
+            inCheck = ""
         send(
             {
                 "gameroom": room,
                 "board": state,
-                "player": boards[room][turnColor],
+                "player": boards[room][board.player],
                 "inCheck": inCheck,
             },
             to=room,

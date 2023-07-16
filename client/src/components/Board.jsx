@@ -38,6 +38,7 @@ const Board = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.board != false) {
+          console.log(data.player);
           addToBoard(data.board);
           setPlayer(data.player);
           setInCheck(data.inCheck);
@@ -116,7 +117,7 @@ const Board = () => {
           ))
         )}
       </div>
-      <h1 className="turnAnnounce">{inCheck}!</h1>
+      <h1 className="turnAnnounce">{inCheck}</h1>
     </>
   );
 };
