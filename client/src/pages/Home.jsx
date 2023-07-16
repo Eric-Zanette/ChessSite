@@ -2,7 +2,15 @@ import { useContext } from "react";
 import UsersContext from "../context/Users";
 
 const Home = () => {
-  const { user } = useContext(UsersContext);
+  const { user, isLoading } = useContext(UsersContext);
+
+  if (isLoading) {
+    return (
+      <div className="profileContainer">
+        <h1>Loading!</h1>
+      </div>
+    );
+  }
 
   if (user) {
     return (

@@ -5,6 +5,8 @@ const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     get_user();
   }, []);
@@ -49,6 +51,7 @@ export const UsersProvider = ({ children }) => {
   };
 
   const get_user = () => {
+    setIsLoading(true);
     const token = localStorage.getItem("token");
 
     return fetch("http://localhost:5000/user", {
@@ -66,6 +69,7 @@ export const UsersProvider = ({ children }) => {
         data.username
           ? setUser({ username: data.username, email: data.email })
           : setUser(null);
+        setIsLoading(false);
       });
   };
 
@@ -81,6 +85,8 @@ export const UsersProvider = ({ children }) => {
         login,
         register,
         logout,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

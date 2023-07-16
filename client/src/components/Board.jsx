@@ -102,9 +102,7 @@ const Board = () => {
                   (move) =>
                     move[0] === square.position[0] &&
                     move[1] === square.position[1]
-                )
-                  ? "valid"
-                  : "invalid"
+                ) && "valid"
               }`}
               onClick={() => onClick(square.position)}
             >

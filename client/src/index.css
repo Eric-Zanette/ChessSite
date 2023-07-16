@@ -98,14 +98,12 @@ nav .navContainer .navLinks {
 .gameRoom .formsContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .gameRoom .formsContainer .nameContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
 }
 
 .gameRoom .formsContainer .nameContainer .nameHeader {
@@ -123,6 +121,7 @@ nav .navContainer .navLinks {
 }
 
 .gameRoom form {
+  margin-top: 20px;
   display: flex;
 }
 
@@ -218,11 +217,11 @@ nav .navContainer .navLinks {
   width: 100%;
 }
 
-.registerContainer .registerForm input.invalid {
+.invalid {
   border: red 1px solid;
 }
 
-.registerContainer .registerForm .invalidText {
+.invalidText {
   color: red;
   font-size: 12px;
 }

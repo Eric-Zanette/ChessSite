@@ -31,8 +31,10 @@ def match():
     name = request.get_json().get("name")
 
     if create is not None:
+        if len(create) == 0:
+            return {"create": "must enter game room name"}
         if create in boards.keys():
-            return {"error": "game already exists"}
+            return {"create": "game already exists"}
         board = chess.Gameboard()
         board.reset()
         boards[create] = {"board": board, "White": name}
@@ -40,15 +42,15 @@ def match():
         player = name
         print(player)
     elif join is not None:
+        if len(join) == 0:
+            return {"join": "must enter game room name"}
         if join not in boards.keys():
-            return {"error": "Games does not exist"}
+            return {"join": "Games does not exist"}
         boardRoom = boards[join]
         board = boardRoom["board"]
         if boardRoom["White"] != name:
             boardRoom["Black"] = name
         room = join
-    else:
-        return {"error": "must enter game room name"}
     return {"room": room, "name": name}
 
 

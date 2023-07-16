@@ -9,6 +9,11 @@ const RoomForm = ({ setRoom }) => {
     name: "",
   });
 
+  const [errors, setErrors] = useState({
+    join: "",
+    create: "",
+  });
+
   const onChange = (e) => {
     setInput({
       ...input,
@@ -16,7 +21,7 @@ const RoomForm = ({ setRoom }) => {
     });
   };
 
-  const { user } = useContext(UsersContext);
+  const { user, isLoading } = useContext(UsersContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,12 +37,17 @@ const RoomForm = ({ setRoom }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.room);
         setRoom(data.room);
+        console.log(data);
+        setErrors(data);
         localStorage.setItem("room", data.room);
         localStorage.setItem("name", data.name);
       });
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   if (!user) {
     return <p>Sign in to Play a Game</p>;
@@ -57,11 +67,18 @@ const RoomForm = ({ setRoom }) => {
             placeholder="Game Name"
             name="join"
             value={input.join}
+            className={errors.join && "invalid"}
             onChange={(e) => onChange(e)}
           />
         </div>
         <button name="join">Join</button>
       </form>
+      <p
+        className="invalidText"
+        style={{ display: errors.join ? "block" : "none" }}
+      >
+        {errors.join}
+      </p>
       <form name="create" onSubmit={(e) => onSubmit(e)}>
         <div className="line">
           <h2>Create a New Game</h2>
@@ -69,11 +86,19 @@ const RoomForm = ({ setRoom }) => {
             placeholder="Game Name"
             name="create"
             value={input.create}
+            className={errors.create && "invalid"}
             onChange={(e) => onChange(e)}
           />
         </div>
+
         <button name="create">Create</button>
       </form>
+      <p
+        className="invalidText"
+        style={{ display: errors.create ? "block" : "none" }}
+      >
+        {errors.create}
+      </p>
     </div>
   );
 };
