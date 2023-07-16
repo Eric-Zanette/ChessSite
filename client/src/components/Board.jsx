@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Piece from "./Piece";
+import socketio from "../socket";
 
 const Board = () => {
   /* Initialize empty board */
@@ -21,8 +22,6 @@ const Board = () => {
   const [player, setPlayer] = useState();
   const [inCheck, setInCheck] = useState();
   const [validMoves, setValidMoves] = useState([]);
-
-  var socketio = io("http://localhost:5000");
 
   /* get pieces state */
   useEffect(() => {

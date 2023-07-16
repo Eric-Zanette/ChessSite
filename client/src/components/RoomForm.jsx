@@ -90,7 +90,6 @@ const RoomForm = ({ setRoom }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-
         <button name="create">Create</button>
       </form>
       <p
