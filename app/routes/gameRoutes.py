@@ -24,9 +24,9 @@ def get_games():
 
     gameData = map(
         lambda x: {
-            "white": x.user_id_white,
-            "black": x.user_id_black,
-            "winner": x.winner,
+            "white": User.query.get(x.user_id_white).username,
+            "black": User.query.get(x.user_id_black).username,
+            "winner": User.query.get(x.winner).username,
             "name": x.room,
         },
         games,

@@ -5,7 +5,7 @@ const ProfileGameList = () => {
   const [games, setGames] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const user = useContext(UsersContext);
+  const { user } = useContext(UsersContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,8 +23,8 @@ const ProfileGameList = () => {
       .then((data) => {
         console.log(data);
         setGames(data);
+        setIsLoading(false);
       });
-    setIsLoading(false);
   }, []);
 
   const win_count = (games) => {
@@ -60,7 +60,7 @@ const ProfileGameList = () => {
               <div className="rowElement">{game.white}</div>
               <div className="rowElement">{game.black}</div>
               <div className="rowElement">
-                {user.id === game.winner ? (
+                {user.username === game.winner ? (
                   <div className="win">Won</div>
                 ) : (
                   <div className="lose">Lost</div>

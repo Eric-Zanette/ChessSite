@@ -10,7 +10,11 @@ const GameRoom = () => {
   return (
     <div className="gameRoom">
       <div className="gameArea">
-        {room ? <Board room={room} /> : <RoomForm setRoom={setRoom} />}
+        {room ? (
+          <Board room={room} setRoom={setRoom} />
+        ) : (
+          <RoomForm setRoom={setRoom} />
+        )}
       </div>
       {room ? "" : <GameList setRoom={setRoom} />}
     </div>

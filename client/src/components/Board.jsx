@@ -5,7 +5,7 @@ import socketio from "../socket";
 import UsersContext from "../context/Users";
 import { useContext } from "react";
 
-const Board = ({ room }) => {
+const Board = ({ room, setRoom }) => {
   /* Initialize empty board */
 
   const baseboard = [];
@@ -114,6 +114,15 @@ const Board = ({ room }) => {
           ))
         )}
       </div>
+
+      {inCheck == "Checkmate!" && (
+        <div className="endCard">
+          {user.username == player ? <h1>You Lost!</h1> : <h1>"You Won!"</h1>}
+          <button className="again" onClick={() => setRoom(null)}>
+            Find Another Game
+          </button>
+        </div>
+      )}
       <h1 className="turnAnnounce">{inCheck}</h1>
     </>
   );

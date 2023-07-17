@@ -237,6 +237,38 @@ nav .navContainer .navLinks {
   color: black;
 }
 
+.endCard {
+  position: absolute;
+  background-color: rgb(251, 165, 17);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid black;
+  height: 200px;
+  width: 300px;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.endCard h1 {
+  color: rgb(0, 0, 0);
+  font-weight: 900;
+}
+
+.endCard button {
+  width: 150px;
+  background-color: beige;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 3px;
+  color: black;
+  font-weight: 600;
+}
+
 /* Registration */
 
 .registerContainer {
@@ -295,4 +327,12 @@ nav .navContainer .navLinks {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0;
+}
+
+.win {
+  color: green;
+}
+
+.lose {
+  color: red;
 }

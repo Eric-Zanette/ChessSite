@@ -68,6 +68,8 @@ def match():
 @app.route("/board", methods=["POST", "GET"])
 def home():
     room = request.get_json().get("room")
+    if room not in boards.keys():
+        return ""
     boardRoom = boards[room]
     board = boards[room]["board"]
     playerColor = board.player
