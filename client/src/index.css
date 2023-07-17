@@ -158,12 +158,13 @@ nav .navContainer .navLinks {
 }
 
 .gameRoom form button {
-  color: white;
+  color: rgb(255, 255, 255);
   height: 100%;
   width: 100%;
-  background-color: rgba(255, 132, 0, 0.673);
+  background-color: rgba(171, 3, 3, 0.879);
   padding: 0 10px;
   border-radius: 0 10px 10px 0;
+  font-weight: 900;
 }
 
 /* gamelist */
