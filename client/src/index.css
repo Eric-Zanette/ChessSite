@@ -95,6 +95,13 @@ nav .navContainer .navLinks {
 
 /* form */
 
+.gameRoom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .gameRoom .formsContainer {
   display: flex;
   flex-direction: column;
@@ -123,6 +130,9 @@ nav .navContainer .navLinks {
 .gameRoom form {
   margin-top: 20px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
 }
 
 .gameRoom form .formLine {
@@ -135,6 +145,7 @@ nav .navContainer .navLinks {
   display: flex;
   flex-direction: column;
   background: rgb(129, 0, 0);
+  height: 100%;
 }
 
 .gameRoom form .line h2 {
@@ -143,6 +154,7 @@ nav .navContainer .navLinks {
 
 .gameRoom form .line input {
   padding: 5px;
+  height: 100%;
 }
 
 .gameRoom form button {
@@ -152,6 +164,38 @@ nav .navContainer .navLinks {
   background-color: rgba(255, 132, 0, 0.673);
   padding: 0 10px;
   border-radius: 0 10px 10px 0;
+}
+
+/* gamelist */
+
+.gameRoom .gameListContainer {
+  margin-top: 20px;
+  width: 500px;
+  justify-content: center;
+}
+
+.gameRoom .gameListContainer h1 {
+  font-size: 30px;
+  text-align: center;
+}
+
+.gameRoom .gameListContainer .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.gameRoom .gameListContainer .row .rowElement {
+  background-color: rgb(117, 19, 19);
+  width: 100%;
+  text-align: center;
+  border: black 1px solid;
+}
+
+.gameRoom .gameListContainer .row .rowElement.header {
+  background-color: rgb(215, 215, 215);
+  color: black;
+  font-weight: 700;
 }
 
 /* Board */

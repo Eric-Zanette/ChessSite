@@ -1,6 +1,5 @@
 from app import db
 from flask import request
-from werkzeug.urls import url_parse
 from app import app
 from app.validators import registration_validation, login_validation
 from werkzeug.security import generate_password_hash, check_password_hash

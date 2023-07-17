@@ -45,7 +45,6 @@ export const UsersProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         return data.msg === "Success!" ? true : data;
       });
   };
@@ -65,7 +64,6 @@ export const UsersProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         data.username
           ? setUser({ username: data.username, email: data.email })
           : setUser(null);

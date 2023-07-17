@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import Piece from "./Piece";
 import socketio from "../socket";
+import UsersContext from "../context/Users";
+import { useContext } from "react";
 
-const Board = () => {
+const Board = ({ room }) => {
   /* Initialize empty board */
 
   const baseboard = [];
@@ -17,11 +19,23 @@ const Board = () => {
     baseboard.push(baseline);
   }
 
+  const { user } = useContext(UsersContext);
+
   const [board, setBoard] = useState(baseboard);
   const [moves, setMoves] = useState([]);
   const [player, setPlayer] = useState();
   const [inCheck, setInCheck] = useState();
   const [validMoves, setValidMoves] = useState([]);
+
+  /* Receives updated board state */
+  useEffect(() => {
+    socketio.on("message", (data) => {
+      addToBoard(data.board);
+      setPlayer(data.player);
+      setInCheck(data.inCheck);
+    });
+    socketio.emit("message", null, null, room, null);
+  }, []);
 
   /* get pieces state */
   useEffect(() => {
@@ -32,12 +46,11 @@ const Board = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ room: localStorage.getItem("room") }),
+      body: JSON.stringify({ room: room }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.board != false) {
-          console.log(data.player);
           addToBoard(data.board);
           setPlayer(data.player);
           setInCheck(data.inCheck);
@@ -64,8 +77,7 @@ const Board = () => {
   const onClick = (position) => {
     if (moves.length == 1) {
       const sendMoves = [...moves, position];
-      const room = localStorage.getItem("room");
-      const name = localStorage.getItem("name");
+      const name = user.username;
       socketio.emit("message", sendMoves[0], sendMoves[1], room, name);
       setMoves([]);
       setValidMoves([]);
@@ -76,18 +88,6 @@ const Board = () => {
       }
     }
   };
-
-  /* Receives updated board state */
-  socketio.on("message", (data) => {
-    console.log(data);
-    addToBoard(data.board);
-    setPlayer(data.player);
-    setInCheck(data.inCheck);
-  });
-
-  if (!board) {
-    return <div>LOADING</div>;
-  }
 
   return (
     <>
