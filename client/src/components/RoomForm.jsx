@@ -38,10 +38,7 @@ const RoomForm = ({ setRoom }) => {
       .then((res) => res.json())
       .then((data) => {
         setRoom(data.room);
-        console.log(data);
         setErrors(data);
-        localStorage.setItem("room", data.room);
-        localStorage.setItem("name", data.name);
       });
   };
 

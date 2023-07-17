@@ -137,7 +137,7 @@ nav .navContainer .navLinks {
 
 .gameRoom form .formLine {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -168,31 +168,31 @@ nav .navContainer .navLinks {
 
 /* gamelist */
 
-.gameRoom .gameListContainer {
+.gameListContainer {
   margin-top: 20px;
   width: 500px;
   justify-content: center;
 }
 
-.gameRoom .gameListContainer h1 {
+.gameListContainer h1 {
   font-size: 30px;
   text-align: center;
 }
 
-.gameRoom .gameListContainer .row {
+.gameListContainer .row {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
 }
 
-.gameRoom .gameListContainer .row .rowElement {
+.gameListContainer .row .rowElement {
   background-color: rgb(117, 19, 19);
   width: 100%;
   text-align: center;
   border: black 1px solid;
 }
 
-.gameRoom .gameListContainer .row .rowElement.header {
+.gameListContainer .row .rowElement.header {
   background-color: rgb(215, 215, 215);
   color: black;
   font-weight: 700;
@@ -288,4 +288,11 @@ nav .navContainer .navLinks {
 
 .profileContainer h1 {
   font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.playedSumamry {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
 }

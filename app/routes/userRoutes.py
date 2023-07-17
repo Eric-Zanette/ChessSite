@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User
 import jwt
 
-jwt_key = "zzzzxxxxxcccccvvvvvaassddff"
+jwt_key = app.config["SECRET_KEY"]
 
 
 @app.route("/register", methods=["POST"])
@@ -43,7 +43,7 @@ def login():
         user = User.query.filter_by(email=req["email"]).first()
         if user and check_password_hash(user.password, req["password"]):
             token = jwt.encode(
-                {"username": user.username, "email": user.email},
+                {"username": user.username, "email": user.email, "id": user.id},
                 jwt_key,
                 algorithm="HS256",
             )
@@ -64,6 +64,10 @@ def get_user():
     except:
         return {"error": "user does not exist"}
     if User.query.filter_by(email=decoded["email"]).first() is not None:
-        return {"email": decoded["email"], "username": decoded["username"]}
+        return {
+            "email": decoded["email"],
+            "username": decoded["username"],
+            "id": decoded["id"],
+        }
     else:
         return {"error": "user does not exist"}

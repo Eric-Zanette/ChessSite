@@ -13,7 +13,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from app.routes import boardRoutes, userRoutes
+from app.routes import boardRoutes, userRoutes, gameRoutes
 
 
 if __name__ == "__main__":

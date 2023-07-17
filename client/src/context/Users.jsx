@@ -65,7 +65,7 @@ export const UsersProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         data.username
-          ? setUser({ username: data.username, email: data.email })
+          ? setUser({ username: data.username, email: data.email, id: data.id })
           : setUser(null);
         setIsLoading(false);
       });
