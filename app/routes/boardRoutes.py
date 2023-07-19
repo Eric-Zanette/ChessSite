@@ -1,6 +1,6 @@
 from flask import request, session
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
-import Chess.ChessObjects as chess
+import app.Chess.ChessObjects as chess
 from app import app
 from app import db
 from app import socketio
