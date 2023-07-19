@@ -13,7 +13,7 @@ boards = {}
 """ Gets active boards """
 
 
-@app.route("/boards", methods=["GET"])
+@app.route("/api/boards", methods=["GET"])
 def get_boards():
     board_list = []
     full = False
@@ -34,7 +34,7 @@ def get_boards():
 """ TODO clean up this logic """
 
 
-@app.route("/match", methods=["GET", "POST"])
+@app.route("/api/match", methods=["GET", "POST"])
 def match():
     create = request.get_json().get("create")
     join = request.get_json().get("join")
@@ -65,7 +65,7 @@ def match():
 """ Initializes board  """
 
 
-@app.route("/board", methods=["POST", "GET"])
+@app.route("/api/board", methods=["POST", "GET"])
 def home():
     room = request.get_json().get("room")
     if room not in boards.keys():
@@ -84,7 +84,7 @@ def home():
 """ Joins gameroom """
 
 
-@app.route("/room")
+@app.route("/api/room")
 def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in boards.keys():

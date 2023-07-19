@@ -12,7 +12,7 @@ export const UsersProvider = ({ children }) => {
   }, []);
 
   const login = (input) => {
-    return fetch("/login", {
+    return fetch("/api/login", {
       credentials: "include",
       method: "POST",
       headers: {
@@ -34,7 +34,7 @@ export const UsersProvider = ({ children }) => {
   };
 
   const register = (input) => {
-    return fetch("/register", {
+    return fetch("/api/register", {
       credentials: "include",
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ export const UsersProvider = ({ children }) => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
 
-    return fetch("/user", {
+    return fetch("/api/user", {
       credentials: "include",
       method: "POST",
       headers: {

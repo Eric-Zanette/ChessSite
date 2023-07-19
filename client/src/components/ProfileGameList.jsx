@@ -10,7 +10,7 @@ const ProfileGameList = () => {
   useEffect(() => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5000/games", {
+    fetch("/api/games", {
       credentials: "include",
       method: "POST",
       headers: {
@@ -28,7 +28,7 @@ const ProfileGameList = () => {
   }, []);
 
   const win_count = (games) => {
-    return games.filter((game) => game.winner === user.id).length;
+    return games.filter((game) => game.winner === user.username).length;
   };
 
   if (isLoading) {

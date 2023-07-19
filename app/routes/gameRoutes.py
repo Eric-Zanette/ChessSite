@@ -10,7 +10,7 @@ import json
 jwt_key = app.config["SECRET_KEY"]
 
 
-@app.route("/games", methods=["POST"])
+@app.route("/api/games", methods=["POST"])
 def get_games():
     token = request.get_json()["token"]
 

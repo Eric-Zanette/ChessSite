@@ -26,7 +26,7 @@ const RoomForm = ({ setRoom }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const boardName = input[e.target.name];
-    fetch("/match", {
+    fetch("/api/match", {
       credentials: "include",
       method: "POST",
       headers: {

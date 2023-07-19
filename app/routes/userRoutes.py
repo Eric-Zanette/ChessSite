@@ -9,7 +9,7 @@ import jwt
 jwt_key = app.config["SECRET_KEY"]
 
 
-@app.route("/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def register():
     print(request.get_json())
     req = request.get_json()
@@ -34,7 +34,7 @@ def register():
         return errors
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def login():
     req = request.get_json()
     errors = login_validation(req)
@@ -55,7 +55,7 @@ def login():
         return errors
 
 
-@app.route("/user", methods=["POST"])
+@app.route("/api/user", methods=["POST"])
 def get_user():
     token = request.get_json()["token"]
     print(token)

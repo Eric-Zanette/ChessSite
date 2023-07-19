@@ -4,7 +4,7 @@ const GameList = ({ setRoom }) => {
   const [games, setGames] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:5000/boards")
+    fetch("/api/boards")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
