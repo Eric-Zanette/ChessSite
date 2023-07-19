@@ -39,7 +39,7 @@ const Board = ({ room, setRoom }) => {
 
   /* get pieces state */
   useEffect(() => {
-    fetch("http://localhost:5000/board", {
+    fetch("/api/board", {
       credentials: "include",
       method: "POST",
       headers: {
