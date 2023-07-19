@@ -1,1 +1,2 @@
 FLASK_APP=chessServer.py
+FLASK_ENV=production
