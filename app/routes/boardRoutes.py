@@ -5,7 +5,7 @@ from app import app
 from app import db
 from app import socketio
 from app import db
-import json
+import jsonpickle
 
 """ active boards """
 boards = {}
@@ -27,7 +27,7 @@ def get_boards():
         board_list.append({"createdBy": game["White"], "full": full, "name": room})
     print(board_list)
 
-    return board_list
+    return jsonpickle.encode(board_list)
 
 
 """ Creates or joins gameroom """
