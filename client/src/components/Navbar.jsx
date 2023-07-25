@@ -1,20 +1,52 @@
 import { Link } from "react-router-dom";
 import UsersContext from "../context/Users";
-import { useContext } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import { FaBars } from "react-icons/fa";
 
 const Navbar = () => {
+  const [toggle, setToggle] = useState(false);
   const { user, logout } = useContext(UsersContext);
+  const menuRef = useRef(null);
+
+  const onClick = (e) => {
+    e.preventDefault();
+    setToggle(!toggle);
+    console.log(toggle);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav>
       <div className="navContainer">
         <div className="logo">
-          <img src="../images/chess-39293.png" alt="" />
           <h1>
             <Link to={"/"}>Chesster</Link>
           </h1>
         </div>
-        <ul className="navLinks">
+
+        <div
+          className={`barsDiv ${toggle == true && "mediaOff"}`}
+          onClick={(e) => onClick(e)}
+        >
+          <FaBars></FaBars>
+        </div>
+
+        <ul
+          ref={menuRef}
+          className={`navLinks ${toggle == false && "mediaOff"}`}
+        >
           <li>
             <Link to={"/"}>Home</Link>
           </li>
