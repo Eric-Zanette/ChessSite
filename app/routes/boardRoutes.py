@@ -59,6 +59,8 @@ def match():
         if boardRoom["White"] != name:
             boardRoom["Black"] = name
         room = join
+    if len(boards) > 20:
+        del boards[list(boards.keys())[0]]
     return {"room": room, "name": name}
 
 
@@ -72,7 +74,6 @@ def home():
         return ""
     boardRoom = boards[room]
     board = boards[room]["board"]
-    playerColor = board.player
     if room is None or room not in boards:
         return {"board": False, "room": room}
     return {
